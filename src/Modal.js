@@ -1,4 +1,3 @@
-import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useState, useEffect } from "react";
 
 function Modal({ dispatch, modalType, balance, loan }) {

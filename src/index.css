@@ -98,6 +98,8 @@ h1 {
 	display: grid;
 	grid-template-columns: 3fr 1fr;
 	grid-template-rows: 75vh;
+	border-bottom: 1px var(--gray-200) solid;
+	border-top: 1px var(--gray-200) solid;
 }
 
 .controls {
@@ -107,7 +109,6 @@ h1 {
 	gap: 1rem;
 	padding: 1rem;
 	background-color: var(--gray-300);
-	border-bottom: 1px var(--gray-200) solid;
 	border-left: 1px var(--gray-200) solid;
 }
 
@@ -149,6 +150,11 @@ button:hover:disabled {
 	border: 1px var(--brand-black) solid;
 	box-shadow: none;
 	transform: none;
+}
+
+ul {
+	overflow-y: scroll;
+	color: var(--brand-black);
 }
 
 button ul {
@@ -220,7 +226,7 @@ li {
 .balance-link {
 	text-decoration: underline;
 	cursor: pointer;
-	color: blue;
+	color: var(--brand-900);
 }
 
 .warn {

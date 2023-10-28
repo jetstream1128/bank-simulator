@@ -84,6 +84,7 @@ function reducer(state, action) {
 			};
 
 		case "close account":
+			localStorage.removeItem("data");
 			return { ...initialState };
 
 		default:
