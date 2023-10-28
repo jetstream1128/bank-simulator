@@ -1,22 +1,4 @@
-/*
-INSTRUCTIONS / CONSIDERATIONS:
-
-1. Let's implement a simple bank account! It's similar to the example that I used as an analogy to explain how useReducer works, but it's simplified (we're not using account numbers here)
-
-2. Use a reducer to model the following state transitions: openAccount, deposit, withdraw, requestLoan, payLoan, closeAccount. Use the `initialState` below to get started.
-
-3. All operations (expect for opening account) can only be performed if isActive is true. If it's not, just return the original state object. You can check this right at the beginning of the reducer
-
-4. When the account is opened, isActive is set to true. There is also a minimum deposit amount of 500 to open an account (which means that the balance will start at 500)
-
-5. Customer can only request a loan if there is no loan yet. If that condition is met, the requested amount will be registered in the 'loan' state, and it will be added to the balance. If the condition is not met, just return the current state
-
-6. When the customer pays the loan, the opposite happens: the money is taken from the balance, and the 'loan' will get back to 0. This can lead to negative balances, but that's no problem, because the customer can't close their account now (see next point)
-
-7. Customer can only close an account if there is no loan, AND if the balance is zero. If this condition is not met, just return the state. If the condition is met, the account is deactivated and all money is withdrawn. The account basically gets back to the initial state
-*/
-
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import Account from "./Account";
 import Controls from "./Controls";
 import Header from "./Header";
@@ -25,60 +7,84 @@ import Transaction from "./Transaction";
 import TransactionsTable from "./TransactionsTable";
 import Start from "./Start";
 
-const trans = [
-	{
-		id: 1,
-		type: "Withdraw",
-		amount: 50,
-		date: "2023-10-21",
-	},
-	{
-		id: 2,
-		type: "Deposit",
-		amount: 100,
-		date: "2023-10-22",
-	},
-	{
-		id: 3,
-		type: "Loan",
-		amount: 1000,
-		date: "2023-10-22",
-	},
-	{
-		id: 4,
-		type: "Pay Loan",
-		amount: 500,
-		date: "2023-10-22",
-	},
-];
-
 const initialState = {
 	transactions: [],
-	balance: 244,
-	loan: 500,
-	isActive: false,
+	balance: 0,
+	loan: 0,
+	isModalActive: false,
 	status: "start",
-	modalContent: { header: "", amount: 0 },
+	modalType: "",
 };
 
 function reducer(state, action) {
+	function addTransaction() {
+		const id = crypto.randomUUID();
+		const transactionType = action.type
+			.split(" ")
+			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+			.join(" ");
+
+		return [
+			...state.transactions,
+			{ id, type: transactionType, amount: action.payload, date: new Date() },
+		];
+	}
+
 	switch (action.type) {
 		case "start":
-			// state.transactions = [...trans];
-			return { ...initialState, status: "ready", transactions: [...trans] };
+			return { ...initialState, status: "ready" };
+
+		case "load":
+			return {
+				...initialState,
+				balance: action.payload.balance,
+				loan: action.payload.loan,
+				status: "ready",
+				transactions: action.payload.transactions,
+			};
 
 		case "handleModal":
 			return {
 				...state,
-				isActive: !state.isActive,
-				modalContent: { header: action.payload, amount: action.payload },
+				isModalActive: !state.isModalActive,
+				modalType: action.payload,
 			};
 		case "deposit":
 			return {
 				...state,
-				isActive: !state.isActive,
+				isModalActive: !state.isModalActive,
 				balance: state.balance + action.payload,
+				transactions: addTransaction(),
 			};
+
+		case "withdraw":
+			return {
+				...state,
+				isModalActive: !state.isModalActive,
+				balance: state.balance - action.payload,
+				transactions: addTransaction(),
+			};
+
+		case "loan":
+			return {
+				...state,
+				isModalActive: !state.isModalActive,
+				loan: state.loan + action.payload,
+				balance: state.balance + action.payload,
+				transactions: addTransaction(),
+			};
+
+		case "pay loan":
+			return {
+				...state,
+				isModalActive: !state.isModalActive,
+				loan: state.loan - action.payload,
+				balance: state.balance - action.payload,
+				transactions: addTransaction(),
+			};
+
+		case "close account":
+			return { ...initialState };
 
 		default:
 			throw new Error("Action unknown");
@@ -87,9 +93,28 @@ function reducer(state, action) {
 
 export default function App() {
 	const [
-		{ status, isActive, transactions, balance, loan, modalContent },
+		{ status, isModalActive, transactions, balance, loan, modalType },
 		dispatch,
 	] = useReducer(reducer, initialState);
+
+	useEffect(function () {
+		const savedState = localStorage.getItem("data");
+
+		if (savedState) {
+			const parsedState = JSON.parse(savedState);
+			dispatch({ type: "load", payload: parsedState });
+		}
+	}, []);
+
+	useEffect(
+		function () {
+			if (status === "start") return;
+
+			const savedData = { transactions, balance, loan };
+			localStorage.setItem("data", JSON.stringify(savedData));
+		},
+		[transactions, balance, loan, status]
+	);
 
 	return (
 		<div className="App">
@@ -98,14 +123,19 @@ export default function App() {
 			{status === "start" && <Start dispatch={dispatch} status={status} />}
 			{status === "ready" && (
 				<Account>
-					{isActive && (
-						<Modal dispatch={dispatch} modalContent={modalContent} />
+					{isModalActive && (
+						<Modal
+							dispatch={dispatch}
+							modalType={modalType}
+							balance={balance}
+							loan={loan}
+						/>
 					)}
 
 					<TransactionsTable>
 						<Transaction transactions={transactions} />
 					</TransactionsTable>
-					<Controls dispatch={dispatch} />
+					<Controls dispatch={dispatch} balance={balance} />
 				</Account>
 			)}
 		</div>

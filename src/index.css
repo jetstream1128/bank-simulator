@@ -7,10 +7,10 @@
 	--gray-500: hsl(220, 13%, 18%);
 
 	--red-err: hsl(5, 46%, 50%);
-	--red: hsl(5, 82%, 60%);
+	--red: hsl(5, 70%, 60%);
 
 	--green-ok: hsl(152, 100%, 28%);
-	--green: hsl(152, 58%, 60%);
+	--green: hsl(152, 70%, 60%);
 
 	--brand-100: hsl(193, 94%, 87%);
 	--brand-300: hsl(193, 94%, 76%);
@@ -27,16 +27,17 @@
 }
 
 ::-webkit-scrollbar-track {
-	background-color: var(--gray-100);
+	background-color: var(--gray-500);
+	border-left: 1px var(--gray-200) solid;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: var(--brand-700);
+	background-color: var(--brand-300);
 	border-radius: 1px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: var(--brand-100);
+	background-color: var(--brand-500);
 }
 
 * {
@@ -48,7 +49,7 @@
 
 body {
 	color: var(--brand-white);
-	background-color: var(--gray-300);
+	background-color: var(--gray-500);
 }
 
 h1 {
@@ -73,11 +74,11 @@ h1 {
 	background-color: var(--gray-500);
 	text-align: center;
 	padding: 1rem 0;
-	border-bottom: 1px var(--gray-200) solid;
+	border-bottom: 1px var(--gray-300) solid;
 }
 
 .header h1 span {
-	color: var(--brand-500);
+	color: var(--brand-700);
 }
 
 .header div {
@@ -86,13 +87,13 @@ h1 {
 	justify-content: space-evenly;
 	gap: 40rem;
 	font-size: 1.5rem;
-	border-top: 1px var(--gray-200) solid;
+	border-top: 1px var(--gray-300) solid;
 
 	padding-top: 1rem;
 }
 
 .account {
-	background-color: var(--gray-100);
+	background-color: var(--gray-300);
 	color: var(--brand-black);
 	display: grid;
 	grid-template-columns: 3fr 1fr;
@@ -106,7 +107,8 @@ h1 {
 	gap: 1rem;
 	padding: 1rem;
 	background-color: var(--gray-300);
-	border-left: 1px var(--gray-500) solid;
+	border-bottom: 1px var(--gray-200) solid;
+	border-left: 1px var(--gray-200) solid;
 }
 
 .controls p:last-child {
@@ -126,7 +128,7 @@ button {
 	padding: 6px 18px;
 	border-radius: 2px;
 	border: 1px var(--gray-500) solid;
-	background-color: var(--gray-200);
+	background-color: var(--gray-100);
 	transition: all 0.1s linear;
 }
 
@@ -142,19 +144,27 @@ button:active {
 	transform: translate(0px, 0px);
 }
 
-ul {
+button:hover:disabled {
+	background-color: var(--gray-100);
+	border: 1px var(--brand-black) solid;
+	box-shadow: none;
+	transform: none;
+}
+
+button ul {
 	overflow-y: scroll;
+	border-bottom: 1px var(--gray-200) solid;
 }
 
 li {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 0.1fr 1fr 1fr 1fr;
 	justify-items: center;
 	grid-gap: 10px;
 	font-size: 1.2rem;
 	padding: 0.5rem 1rem;
 	background-color: var(--gray-200);
-	border-bottom: 1px var(--gray-500) solid;
+	border-bottom: 1px var(--gray-300) solid;
 }
 
 .type {
@@ -180,14 +190,41 @@ li {
 }
 .modal {
 	position: absolute;
+	padding: 1rem 0;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 35rem;
-	height: 10rem;
 	background-color: var(--brand-100);
 	border: 1px solid var(--gray-500);
 	box-shadow: 3px 3px var(--brand-700), 6px 6px var(--brand-900);
+}
+
+.modal button {
+	width: 90px;
+}
+
+.modal button:last-child {
+	margin-left: 2rem;
+}
+
+.modal-info {
+	font-size: 0.9rem;
+	margin-bottom: 2rem;
+}
+
+.modal-info p {
+	transition: all 0.3s linear;
+}
+
+.balance-link {
+	text-decoration: underline;
+	cursor: pointer;
+	color: blue;
+}
+
+.warn {
+	color: var(--red);
 }
 
 .modal div {
@@ -195,7 +232,7 @@ li {
 }
 
 h3 {
-	padding: 1rem 0;
+	font-size: 1.5rem;
 }
 
 input {
@@ -206,7 +243,7 @@ input {
 .start {
 	height: 20rem;
 	background-color: var(--gray-500);
-	border-bottom: 1px solid var(--gray-200);
+	border-bottom: 1px solid var(--gray-300);
 }
 
 .start h3 {
