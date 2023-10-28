@@ -1,13 +1,220 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap");
+
+:root {
+	--gray-100: hsl(220, 18%, 57%);
+	--gray-200: hsl(220, 13%, 44%);
+	--gray-300: hsl(220, 13%, 31%);
+	--gray-500: hsl(220, 13%, 18%);
+
+	--red-err: hsl(5, 46%, 50%);
+	--red: hsl(5, 82%, 60%);
+
+	--green-ok: hsl(152, 100%, 28%);
+	--green: hsl(152, 58%, 60%);
+
+	--brand-100: hsl(193, 94%, 87%);
+	--brand-300: hsl(193, 94%, 76%);
+	--brand-500: hsl(193, 94%, 68%);
+	--brand-700: hsl(193, 94%, 52%);
+	--brand-900: hsl(193, 94%, 43%);
+
+	--brand-white: hsl(193, 94%, 95%);
+	--brand-black: hsl(193, 94%, 5%);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--brand-700);
+	border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--brand-100);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "Roboto Mono", monospace;
+}
+
+body {
+	color: var(--brand-white);
+	background-color: var(--gray-300);
+}
+
+h1 {
+	font-size: 3rem;
+	margin-bottom: 1.2rem;
+}
+
+.App {
+	font-family: sans-serif;
+	text-align: center;
+}
+
+.green {
+	color: var(--green);
+}
+
+.red {
+	color: var(--red);
+}
+
+.header {
+	background-color: var(--gray-500);
+	text-align: center;
+	padding: 1rem 0;
+	border-bottom: 1px var(--gray-200) solid;
+}
+
+.header h1 span {
+	color: var(--brand-500);
+}
+
+.header div {
+	/* display: none; */
+	display: flex;
+	justify-content: space-evenly;
+	gap: 40rem;
+	font-size: 1.5rem;
+	border-top: 1px var(--gray-200) solid;
+
+	padding-top: 1rem;
+}
+
+.account {
+	background-color: var(--gray-100);
+	color: var(--brand-black);
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+	grid-template-rows: 75vh;
+}
+
+.controls {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	gap: 1rem;
+	padding: 1rem;
+	background-color: var(--gray-300);
+	border-left: 1px var(--gray-500) solid;
+}
+
+.controls p:last-child {
+	margin-top: auto;
+}
+
+h2 {
+	margin-top: 1rem;
+	padding-bottom: 3rem;
+	color: var(--brand-100);
+}
+
+button {
+	width: 150px;
+	cursor: pointer;
+	height: auto;
+	padding: 6px 18px;
+	border-radius: 2px;
+	border: 1px var(--gray-500) solid;
+	background-color: var(--gray-200);
+	transition: all 0.1s linear;
+}
+
+button:hover {
+	background-color: var(--brand-100);
+	border: 1px var(--brand-black) solid;
+	box-shadow: 3px 3px var(--brand-700), 6px 6px var(--brand-900);
+	transform: translate(-6px, -6px);
+}
+
+button:active {
+	box-shadow: none;
+	transform: translate(0px, 0px);
+}
+
+ul {
+	overflow-y: scroll;
+}
+
+li {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	justify-items: center;
+	grid-gap: 10px;
+	font-size: 1.2rem;
+	padding: 0.5rem 1rem;
+	background-color: var(--gray-200);
+	border-bottom: 1px var(--gray-500) solid;
+}
+
+.type {
+	justify-self: start;
+}
+
+.date {
+	justify-self: end;
+}
+
+.selected {
+	background-color: var(--brand-100);
+}
+
+.modal-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	backdrop-filter: blur(3px);
+	border-radius: 1px;
+}
+.modal {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 35rem;
+	height: 10rem;
+	background-color: var(--brand-100);
+	border: 1px solid var(--gray-500);
+	box-shadow: 3px 3px var(--brand-700), 6px 6px var(--brand-900);
+}
+
+.modal div {
+	margin-bottom: 20px;
+}
+
+h3 {
+	padding: 1rem 0;
+}
+
+input {
+	margin-left: 10px;
+	margin-bottom: 1.5rem;
+}
+
+.start {
+	height: 20rem;
+	background-color: var(--gray-500);
+	border-bottom: 1px solid var(--gray-200);
+}
+
+.start h3 {
+	font-size: 2rem;
+}
+
+.start p {
+	font-size: 1.2rem;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
 }
