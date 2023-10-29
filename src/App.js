@@ -136,7 +136,7 @@ export default function App() {
 					<TransactionsTable>
 						<Transaction transactions={transactions} />
 					</TransactionsTable>
-					<Controls dispatch={dispatch} balance={balance} />
+					<Controls dispatch={dispatch} balance={balance} loan={loan} />
 				</Account>
 			)}
 		</div>

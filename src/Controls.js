@@ -1,4 +1,4 @@
-function Controls({ dispatch, balance }) {
+function Controls({ dispatch, balance, loan }) {
 	return (
 		<div className="controls">
 			<h2>Controls</h2>
@@ -48,7 +48,7 @@ function Controls({ dispatch, balance }) {
 							payload: "pay loan",
 						});
 					}}
-					disabled={balance === 0}
+					disabled={balance === 0 || loan === 0}
 				>
 					Pay loan
 				</button>

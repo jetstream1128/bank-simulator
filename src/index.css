@@ -12,6 +12,9 @@
 	--green-ok: hsl(152, 100%, 28%);
 	--green: hsl(152, 70%, 60%);
 
+	--yellow: hsl(59, 74%, 50%);
+	--orange: hsl(44, 76%, 50%);
+
 	--brand-100: hsl(193, 94%, 87%);
 	--brand-200: hsl(193, 94%, 82%);
 	--brand-300: hsl(193, 94%, 76%);
@@ -71,6 +74,18 @@ h1 {
 	color: var(--red);
 }
 
+.yellow {
+	color: var(--yellow);
+}
+
+.orange {
+	color: var(--orange);
+}
+
+.smaller {
+	font-size: 0.9rem;
+}
+
 .header {
 	background-color: var(--gray-500);
 	text-align: center;
@@ -101,6 +116,7 @@ h1 {
 	grid-template-rows: 75vh;
 	border-bottom: 1px var(--gray-200) solid;
 	border-top: 1px var(--gray-200) solid;
+	border-radius: 2px;
 }
 
 .controls {
@@ -111,6 +127,7 @@ h1 {
 	padding: 1rem;
 	background-color: var(--gray-300);
 	border-left: 1px var(--gray-200) solid;
+	border-radius: 2px;
 }
 
 .controls p:last-child {
@@ -154,8 +171,13 @@ button:hover:disabled {
 }
 
 ul {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	padding: 10px 20px;
 	overflow-y: scroll;
 	color: var(--brand-black);
+	border-radius: 2px;
 }
 
 button ul {
@@ -171,7 +193,8 @@ li {
 	font-size: 1.2rem;
 	padding: 0.5rem 1rem;
 	background-color: var(--gray-200);
-	border-bottom: 1px var(--gray-300) solid;
+	border: 1px var(--gray-500) solid;
+	border-radius: 2px;
 }
 
 .type {
@@ -204,6 +227,7 @@ li {
 	width: 35rem;
 	background-color: var(--brand-200);
 	border: 1px solid var(--gray-500);
+	border-radius: 2px;
 	box-shadow: 3px 3px var(--brand-700), 6px 6px var(--brand-900);
 }
 
